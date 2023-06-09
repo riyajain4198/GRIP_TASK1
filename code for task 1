@@ -1,0 +1,54 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "b0beac8a-d80a-4e7d-bffd-ec34cbbfb0a8",
+   "metadata": {},
+   "source": [
+    "#"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f48eb1b8-01f6-449f-9c38-dad9f2f4b35b",
+   "metadata": {},
+   "source": [
+    "<center><h1 style='font-size:50px;font-weight:800;'>Prediction using Supervised ML</h1></center>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5ada26a4-769f-438f-9cb2-085d804b3b87",
+   "metadata": {},
+   "source": [
+    "#"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b41ff09e-2c6d-4537-9138-0c797fd2be98",
+   "metadata": {},
+   "source": [
+    "######"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6c8843fe-01b6-4cfe-81b2-c3a8b3de2365",
+   "metadata": {},
+   "source": [
+    "# Created by Riya Jain"
+   ]
+  },
+   "cell_type": "markdown",
+   "id": "b229ed8b-052f-439e-8110-1ab96ecec41f",
+   "metadata": {},
+   "source": [
+    "## Libraries required to run this project\n",
+    "* sci-kit learn\n",
+    "* matplotlib\n",
+    "* seaborn\n",
+    "* pandas\n",
+    "* numpy\n"
+   ]
+  },
