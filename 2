@@ -1,0 +1,1004 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "b0beac8a-d80a-4e7d-bffd-ec34cbbfb0a8",
+   "metadata": {},
+   "source": [
+    "#"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f48eb1b8-01f6-449f-9c38-dad9f2f4b35b",
+   "metadata": {},
+   "source": [
+    "<center><h1 style='font-size:50px;font-weight:800;'>Prediction using Supervised ML</h1></center>"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5ada26a4-769f-438f-9cb2-085d804b3b87",
+   "metadata": {},
+   "source": [
+    "#"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b41ff09e-2c6d-4537-9138-0c797fd2be98",
+   "metadata": {},
+   "source": [
+    "######"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6c8843fe-01b6-4cfe-81b2-c3a8b3de2365",
+   "metadata": {},
+   "source": [
+    "# Created by Riya Jain"
+    June 2023
+   ]
+  },
+  
+  {
+   "cell_type": "markdown",
+   "id": "b229ed8b-052f-439e-8110-1ab96ecec41f",
+   "metadata": {},
+   "source": [
+    "## Libraries required to run this project\n",
+    "* sci-kit learn\n",
+    "* matplotlib\n",
+    "* seaborn\n",
+    "* pandas\n",
+    "* numpy\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "675eff29-cad0-49e6-bbdd-a5c4b59015eb",
+   "metadata": {},
+   "source": [
+    "## How to install the libraries\n",
+    "\n",
+    "#### sci-kit learn:\n",
+    "* pip install sklearn\n",
+    "\n",
+    "#### matplotlib:\n",
+    "* pip install matplotlib\n",
+    "\n",
+    "#### seaborn:\n",
+    "* pip install seaborn\n",
+    "\n",
+    "#### pandas:\n",
+    "* pip install pandas\n",
+    "\n",
+    "#### numpy:\n",
+    "* pip install numpy"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "541bd4b3-3583-410c-ac8b-da1400e5ccbb",
+   "metadata": {},
+   "source": [
+    "# Objective of the task\n",
+    "\n",
+    "~ The person will study for 9.25 hours per day and the supervised machine learning will predict how much marks the the person would score"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4eed28f9-0aea-4256-9a57-dc4a7d42d42a",
+   "metadata": {},
+   "source": [
+    "#### Importing the required libraries"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "a711c25a-5976-4f74-b8f9-6deafc112249",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.linear_model import LinearRegression # Machine Learning algorithm module\n",
+    "\n",
+    "from sklearn.metrics import r2_score # Model evaluation module\n",
+    "\n",
+    " # Plotting module\n",
+    "from matplotlib import pyplot as plt\n",
+    "import seaborn as sns\n",
+    "\n",
+    "import pandas as pd # Dataset module\n",
+    "\n",
+    "import numpy as np # Numerical module"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "58bf3a37-f77c-48e9-9e20-5380f5eae024",
+   "metadata": {},
+   "source": [
+    "#### Reading the dataframe from the local storage and assigning it to a variable called df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "4a823c5e-15dd-4d05-a543-cca34e028473",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Hours</th>\n",
+       "      <th>Scores</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2.5</td>\n",
+       "      <td>21</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>5.1</td>\n",
+       "      <td>47</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>3.2</td>\n",
+       "      <td>27</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>8.5</td>\n",
+       "      <td>75</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>3.5</td>\n",
+       "      <td>30</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Hours  Scores\n",
+       "0    2.5      21\n",
+       "1    5.1      47\n",
+       "2    3.2      27\n",
+       "3    8.5      75\n",
+       "4    3.5      30"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Reading the dataset\n",
+    "df = pd.read_csv('student_scores_and_hours.csv')\n",
+    "\n",
+    "# head() retruns the first 5 rows in the dataframe\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "b1d0f10b-340a-43d2-af5c-4528b1d41395",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Hours</th>\n",
+       "      <th>Scores</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>20</th>\n",
+       "      <td>2.7</td>\n",
+       "      <td>30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>21</th>\n",
+       "      <td>4.8</td>\n",
+       "      <td>54</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>22</th>\n",
+       "      <td>3.8</td>\n",
+       "      <td>35</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>23</th>\n",
+       "      <td>6.9</td>\n",
+       "      <td>76</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>24</th>\n",
+       "      <td>7.8</td>\n",
+       "      <td>86</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    Hours  Scores\n",
+       "20    2.7      30\n",
+       "21    4.8      54\n",
+       "22    3.8      35\n",
+       "23    6.9      76\n",
+       "24    7.8      86"
+      ]
+     },
+     "execution_count": 3,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# tail() returns the last 5 rows in the dataframe\n",
+    "\n",
+    "df.tail()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f2c33d51-0568-4fe9-8955-cc0d8d9f0973",
+   "metadata": {},
+   "source": [
+    "### Visualizing the dataset with scatter plot"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "e4b00a64-3f4c-4d0e-af32-828d611d0d22",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+     "image/png":"https://1drv.ms/i/s!AjhWiS1-tOAejXNa7VD77gVp0FLv?e=Tqih9m"
+      "text/plain": [
+       "<Figure size 500x500 with 1 Axes>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# Assigning the plot size\n",
+    "plt.figure(figsize=(5,5))\n",
+    "\n",
+    "# making the scatter plot\n",
+    "sns.scatterplot(data=df, x='Hours', y='Scores')\n",
+    "\n",
+    "# Title of the plot\n",
+    "plt.title('Hours vs Scores')\n",
+    "\n",
+    "# Displaying the plot\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "6a7050bd-6f53-4546-8c32-8d3967651174",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Hours     0\n",
+       "Scores    0\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 5,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Checking whether there is null values in the given dataset or not\n",
+    "\n",
+    "df.isna().sum()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "50cfafa6-67a3-44e4-93fd-992a79e7a36f",
+   "metadata": {},
+   "source": [
+    "##### It is clearly founded that there is no NaN (null) values in the given dataset"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "ec488773-05b7-4d78-86b6-358e0c4c71a9",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 25 entries, 0 to 24\n",
+      "Data columns (total 2 columns):\n",
+      " #   Column  Non-Null Count  Dtype  \n",
+      "---  ------  --------------  -----  \n",
+      " 0   Hours   25 non-null     float64\n",
+      " 1   Scores  25 non-null     int64  \n",
+      "dtypes: float64(1), int64(1)\n",
+      "memory usage: 528.0 bytes\n"
+     ]
+    }
+   ],
+   "source": [
+    "# info() returns the information about the dataframe\n",
+    "\n",
+    "df.info()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "8f5e342a-c93b-4efb-802f-9fe2efb0a856",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['Hours', 'Scores'], dtype='object')"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "fce03bea-0bf3-419c-8d5c-9f2052bc1324",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Hours</th>\n",
+       "      <th>Scores</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>count</th>\n",
+       "      <td>25.000000</td>\n",
+       "      <td>25.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>mean</th>\n",
+       "      <td>5.012000</td>\n",
+       "      <td>51.480000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>std</th>\n",
+       "      <td>2.525094</td>\n",
+       "      <td>25.286887</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>min</th>\n",
+       "      <td>1.100000</td>\n",
+       "      <td>17.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>25%</th>\n",
+       "      <td>2.700000</td>\n",
+       "      <td>30.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>50%</th>\n",
+       "      <td>4.800000</td>\n",
+       "      <td>47.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>75%</th>\n",
+       "      <td>7.400000</td>\n",
+       "      <td>75.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>max</th>\n",
+       "      <td>9.200000</td>\n",
+       "      <td>95.000000</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "           Hours     Scores\n",
+       "count  25.000000  25.000000\n",
+       "mean    5.012000  51.480000\n",
+       "std     2.525094  25.286887\n",
+       "min     1.100000  17.000000\n",
+       "25%     2.700000  30.000000\n",
+       "50%     4.800000  47.000000\n",
+       "75%     7.400000  75.000000\n",
+       "max     9.200000  95.000000"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Statistical analysis pf the given dataframe\n",
+    "\n",
+    "df.describe()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "d8e628db-8880-45e2-8bb2-3585809dd2d4",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "(25, 2)"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Returns the shape of the dataframe\n",
+    "\n",
+    "df.shape"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "85969dbd-fb9d-4788-8333-47df0514e833",
+   "metadata": {},
+   "source": [
+    "##### The given dataframe contains **25 rows** and **2 columns**"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d5c098f4-a24b-47be-a83f-3939ba0e2f2c",
+   "metadata": {},
+   "source": [
+    "### Spliting the X and y for making the training of data using linear regression"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "e7480d47-8849-456c-a4da-915db0b570a7",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# drop() is used to drop the columns in the dataframe\n",
+    "X = df.drop('Scores', axis=1)\n",
+    "\n",
+    "# asigning the scores column to the variable called y and this is a series\n",
+    "y = df['Scores']"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "2cbb6492-cce9-4fb0-a399-3f3998d860ef",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Hours</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2.5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>5.1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>3.2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>8.5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>3.5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>1.5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>9.2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>5.5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>8.3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>2.7</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>10</th>\n",
+       "      <td>7.7</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>11</th>\n",
+       "      <td>5.9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>12</th>\n",
+       "      <td>4.5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>13</th>\n",
+       "      <td>3.3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>14</th>\n",
+       "      <td>1.1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>15</th>\n",
+       "      <td>8.9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>16</th>\n",
+       "      <td>2.5</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>17</th>\n",
+       "      <td>1.9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>18</th>\n",
+       "      <td>6.1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>19</th>\n",
+       "      <td>7.4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>20</th>\n",
+       "      <td>2.7</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>21</th>\n",
+       "      <td>4.8</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>22</th>\n",
+       "      <td>3.8</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>23</th>\n",
+       "      <td>6.9</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>24</th>\n",
+       "      <td>7.8</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "    Hours\n",
+       "0     2.5\n",
+       "1     5.1\n",
+       "2     3.2\n",
+       "3     8.5\n",
+       "4     3.5\n",
+       "5     1.5\n",
+       "6     9.2\n",
+       "7     5.5\n",
+       "8     8.3\n",
+       "9     2.7\n",
+       "10    7.7\n",
+       "11    5.9\n",
+       "12    4.5\n",
+       "13    3.3\n",
+       "14    1.1\n",
+       "15    8.9\n",
+       "16    2.5\n",
+       "17    1.9\n",
+       "18    6.1\n",
+       "19    7.4\n",
+       "20    2.7\n",
+       "21    4.8\n",
+       "22    3.8\n",
+       "23    6.9\n",
+       "24    7.8"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Returns the X value once the X is splited from the dataframe\n",
+    "\n",
+    "X"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "62cc8a08-3dab-4171-b91b-9ddf885d1fbc",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0     21\n",
+       "1     47\n",
+       "2     27\n",
+       "3     75\n",
+       "4     30\n",
+       "5     20\n",
+       "6     88\n",
+       "7     60\n",
+       "8     81\n",
+       "9     25\n",
+       "10    85\n",
+       "11    62\n",
+       "12    41\n",
+       "13    42\n",
+       "14    17\n",
+       "15    95\n",
+       "16    30\n",
+       "17    24\n",
+       "18    67\n",
+       "19    69\n",
+       "20    30\n",
+       "21    54\n",
+       "22    35\n",
+       "23    76\n",
+       "24    86\n",
+       "Name: Scores, dtype: int64"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Returns the y value once the y is splited from the dataframe\n",
+    "\n",
+    "y"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "a63f22b3-44b8-4f25-a59b-8c3870ee93ca",
+   "metadata": {},
+   "source": [
+    "### Model training"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "dad3cb3a-7021-42d5-84a5-d44364607449",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: \"▸\";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: \"▾\";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: \"\";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: \"\";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: \"\";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id=\"sk-container-id-1\" class=\"sk-top-container\"><div class=\"sk-text-repr-fallback\"><pre>LinearRegression()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class=\"sk-container\" hidden><div class=\"sk-item\"><div class=\"sk-estimator sk-toggleable\"><input class=\"sk-toggleable__control sk-hidden--visually\" id=\"sk-estimator-id-1\" type=\"checkbox\" checked><label for=\"sk-estimator-id-1\" class=\"sk-toggleable__label sk-toggleable__label-arrow\">LinearRegression</label><div class=\"sk-toggleable__content\"><pre>LinearRegression()</pre></div></div></div></div></div>"
+      ],
+      "text/plain": [
+       "LinearRegression()"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Creating the instance for the model\n",
+    "lin_reg = LinearRegression()\n",
+    "\n",
+    "# Making the model to train with the help of fit()\n",
+    "lin_reg.fit(X, y)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "49e45d5a-353b-4378-8806-a8edddb601c3",
+   "metadata": {},
+   "source": [
+    "### Providing the input value as given in the problem statement"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "5e06cd38-8442-4456-8e3f-07d1620a0e38",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# The value is given as a 2 Dimentional array \n",
+    "\n",
+    "input_value = [[9.25]]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "a2c65965-f39b-4874-8b53-f9f92d03bd41",
+   "metadata": {
+    "jupyter": {
+     "source_hidden": true
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "C:\\Users\\Sam Nijin\\AppData\\Roaming\\Python\\Python39\\site-packages\\sklearn\\base.py:439: UserWarning: X does not have valid feature names, but LinearRegression was fitted with feature names\n",
+      "  warnings.warn(\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Assigning the predicted value in the variable called output\n",
+    "\n",
+    "output = lin_reg.predict(input_value)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "8f667515-b94a-480e-a702-987cc494745f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[92.90985477]\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Displaying the output\n",
+    "\n",
+    "print(output)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3b9f3c79-9bab-4ef4-983a-a8b9732db4c6",
+   "metadata": {},
+   "source": [
+    "## Model evaluation\n",
+    "\n",
+    "* Done by the r2_score metrics"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "43baf1e0-bd71-408a-9f06-56ec081ff9f2",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The r2 score of the trained model is 0.9529481969048356\n"
+     ]
+    }
+   ],
+   "source": [
+    "y_pred = lin_reg.predict(X)\n",
+    "\n",
+    "print(f'The r2 score of the trained model is {r2_score(y_pred=y_pred, y_true=y)}')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "04781b8b-5856-4909-a480-f9d973e571d1",
+   "metadata": {},
+   "source": [
+    "### Visualizing the model's prediction with the actual values"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "7619d06a-a9b5-4c76-bced-b5c4553ac96c",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "image/png":"https://1drv.ms/i/s!AjhWiS1-tOAejXQ0A8E9YmiIrNjm?e=HJQaIi"
+      "text/plain": [
+       "<Figure size 500x500 with 1 Axes>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# Assigning the plot size\n",
+    "plt.figure(figsize=(5,5))\n",
+    "\n",
+    "# making the scatter plot\n",
+    "sns.lineplot(data=df, x=X['Hours'], y=y_pred)\n",
+    "sns.scatterplot(data=df, x=X['Hours'], y=y_pred)\n",
+    "\n",
+    "# Y Axis label\n",
+    "plt.ylabel('Scores')\n",
+    "\n",
+    "# Title of the plot\n",
+    "plt.title('Hours vs Scores')\n",
+    "\n",
+    "# Displaying the plot\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "47fdf898-b650-48fa-9f05-2ef4fc7343ff",
+   "metadata": {},
+   "source": [
+    "## Conclusion\n",
+    "\n",
+    "* The person can be able to get **92.90 score** once he studies **for 9.25** hours per day\n",
+    "* The **r2 score** is evaluated and the **score is 95%** which seems to be an better model\n",
+    "* The above plot has almost a straight line which represent that the model is quite good enough in predicting the data based on the given dataset"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8b4ccecd-0d1c-47f1-9e0c-f4cd72fcd265",
+   "metadata": {},
+   "source": [
+    "#"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
